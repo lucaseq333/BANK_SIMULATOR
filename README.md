@@ -1,1 +1,1 @@
-#Symulator banku
+# Symulator banku
