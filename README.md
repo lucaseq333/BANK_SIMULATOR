@@ -13,3 +13,5 @@ Aplikacja wspiera operacje takie jak:
 ➡️ uzyskanie informacji o aktualnym stanie konta i historii płatności
 
 ➡️ tworzenie listy zaufanych odbiorców
+
+➡️ ustawienie płatności cyklicznych
