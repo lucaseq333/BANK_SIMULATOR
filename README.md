@@ -3,6 +3,7 @@ Aplikacja napisana w języku C++ (z użyciem biblioteki fmt).
 
 # Funkcjonalności
 Aplikacja wspiera operacje takie jak:
+
 ➡️ tworzenie/usuwanie kont bankowych
 
 ➡️ wpłata/wypłata środków
