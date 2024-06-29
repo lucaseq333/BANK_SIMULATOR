@@ -1,4 +1,4 @@
 # Symulator banku
-Aplikacja została napisana w języku C++ i z użyciem biblioteki fmt.
+Aplikacja napisana w języku C++ (z użyciem biblioteki fmt).
 
 # Funkcjonalności
