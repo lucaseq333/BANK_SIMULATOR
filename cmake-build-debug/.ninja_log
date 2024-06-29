@@ -1,0 +1,12 @@
+# ninja log v6
+1530	1546	1719661775277045873	_deps/fmt-build/libfmtd.a	8627ffb55cb9bf24
+1	1530	1719661773749049363	_deps/fmt-build/CMakeFiles/fmt.dir/src/format.cc.o	9d4603a5e2b30276
+1	507	1719661773749049363	_deps/fmt-build/CMakeFiles/fmt.dir/src/os.cc.o	9cc03baa3a97d5e4
+1546	1586	1719661775293045837	Symulator_banku	cd1f10a90ec672e1
+1	240	1719661773749049363	CMakeFiles/Symulator_banku.dir/main.cpp.o	86441a3f48c3ebb2
+1	4114	1719662471414633693	build.ninja	3f49fd194d2af44
+0	71	1719662471414633693	build.ninja	3f49fd194d2af44
+1	483	1719662471422633714	_deps/fmt-build/CMakeFiles/fmt.dir/src/os.cc.o	9cc03baa3a97d5e4
+0	1463	1719662471418633704	_deps/fmt-build/CMakeFiles/fmt.dir/src/format.cc.o	9d4603a5e2b30276
+1464	1479	1719662472882637547	_deps/fmt-build/libfmtd.a	8627ffb55cb9bf24
+1479	1518	1719662472898637590	Symulator_banku	cd1f10a90ec672e1
