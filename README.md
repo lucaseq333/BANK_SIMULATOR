@@ -15,3 +15,5 @@ Application support operations such as:
 ➡️ creating a list of trusted recipients
 
 ➡️ setting up recurring payments
+
+cpplogo.png
