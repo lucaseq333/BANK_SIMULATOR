@@ -1,17 +1,17 @@
-# Symulator banku 🏦
-Aplikacja napisana w języku C++ (z użyciem biblioteki fmt).
+# Bank simulator 🏦
+Application created in C++ language (with fmt library).
 
-# Funkcjonalności
-Aplikacja wspiera operacje takie jak:
+# Functionality
+Application support operations such as:
 
-➡️ tworzenie/usuwanie kont bankowych
+➡️ create/delete bank account
 
-➡️ wpłata/wypłata środków
+➡️ deposit/withdraw funds
 
-➡️ przelew na konto
+➡️ transfer to account
 
-➡️ uzyskanie informacji o aktualnym stanie konta i historii płatności
+➡️ obtaining information about the current account balance and payment history
 
-➡️ tworzenie listy zaufanych odbiorców
+➡️ creating a list of trusted recipients
 
-➡️ ustawienie płatności cyklicznych
+➡️ setting up recurring payments
