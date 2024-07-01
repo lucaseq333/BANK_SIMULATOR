@@ -3,18 +3,31 @@
 #include <vector>
 
 struct Client{
+public:
     std::string name, surname, dateOfBirth;
     std::vector<int> PESEL[11];
-    Client(std::string const &name, std::string const &surname, std::string const &dateOfBirth, int const &PESEL){
+    std::vector<int> PIN[4];
+    Client(std::string const &name, std::string const &surname, std::string const &dateOfBirth, int const &PESEL, int const &PIN){
 
     }
 };
 
 struct BankAccount{
+public:
     std::string login,password;
-    double balance;
-    BankAccount(std::string const &login, std::string const &password){
+    double balance = 0;
+    std::vector<int> PIN[4];
+    BankAccount(std::string const &login, std::string const &password, double balance, int const &PIN){
 
+    }
+public:
+    static auto setPINcode(){
+        fmt::println("Set your 4-digits PIN code");
+        int PINcode;
+        std::cin >> PINcode;
+        for(int i=0; i<=4; i++){
+            std::cin >> PINcode;
+        }
     }
 };
 
@@ -32,7 +45,7 @@ auto deposit(int PIN, double ammount, double balance){
 }
 
 auto withdraw(int PIN, double ammount, double balance){
-
+    &deposit;
 }
 
 auto accountBalance(){
@@ -41,11 +54,11 @@ auto accountBalance(){
 
 int main() {
     std::vector<std::string> operations = {
-            "Create account", "Log in", "Deposit", "Withdraw", "Account balance", "Quit"
+            "Create account", "Log in", "Deposit/Withdraw", "Account balance", "Quit"
     };
 
-    fmt::println("Welcome in Bank! Select 1-6:");
-    for(int i=0; i<6; i++) {
+    fmt::println("Welcome in Bank! Select 1-5:");
+    for(int i=0; i<5; i++) {
         fmt::println("{}.{}", (i + 1), operations[i]);
     }
 
@@ -60,7 +73,12 @@ int main() {
             fmt::println("");
             break;
         case 3:
-            fmt::println("");
+            if(selectedNumber==3){
+                std::cout << "Give credentials: ";
+                int PIN, amount, balance;
+                std::cin>>PIN>>amount>>balance;
+                deposit(PIN, amount,balance);
+            }
             break;
         case 4:
             fmt::println("");
@@ -73,12 +91,4 @@ int main() {
             break;
 
     }
-
-    if(selectedNumber==3){
-        std::cout << "Give credentials: ";
-        int PIN, amount, balance;
-        std::cin>>PIN>>amount>>balance;
-        deposit(PIN, amount,balance);
-    }
-
 }
