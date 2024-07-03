@@ -49,7 +49,8 @@ auto createAccount(){
     fmt::print("Type of account (saving, standard): {}",typeOfAccount);
     std::cin >> typeOfAccount;
 
-    fmt::println("Congratulations {}! You have been successfully created your account.1",name);
+    std::time_t timestamp = std::time(nullptr);
+    fmt::println("Congratulations {}! You have been successfully created your account on: {}",name,std::asctime(std::localtime(&timestamp)));
 }
 
 auto logIn(){
@@ -69,10 +70,12 @@ auto logIn(){
 }
 
 auto depositOrWithdraw(int PIN, double ammount, std::string operationName){
-    if(operationName=="deposit")[]->double{
-        fmt::println("");
+    if(operationName=="deposit"){
+        fmt::println("chosen operation: deposit");
+    }; if(operationName=="withdraw"){
+        fmt::println("chosen operation: withdraw");
     };
-    fmt::println("PIN {}, Money ammount: {}",PIN,ammount);
+    fmt::print("PIN {}, Money ammount: {}",PIN,ammount);
     double balance;
     return ammount+=balance;
 }
@@ -107,13 +110,17 @@ auto convertCurrency(){
     return *afterConversion;
 }
 
+auto transfer(Client from, double amount, Client to){
+
+}
+
 int main() {
     std::vector<std::string> operations = {
-            "Create account", "Log in", "Deposit/Withdraw", "Account balance", "Quit"
+            "Create account", "Log in", "Deposit/Withdraw", "Account balance", "Transfer", "Quit"
     };
 
     fmt::println("Welcome in Bank! Select 1-5:");
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<6; i++) {
         fmt::println("{}.{}", (i + 1), operations[i]);
     }
 
@@ -131,10 +138,13 @@ int main() {
             if(selectedNumber==3){
                 std::cout << "Give credentials:\nPIN: ";
                 int PIN, amount;
+                std::string operation;
+
                 std::cin>>PIN;
-                fmt::println("Ammount: ");
+                fmt::print("Deposit or withdraw?: ");
+                std::cin>>operation;
+                fmt::print("Ammount: ");
                 std::cin>>amount;
-                fmt::println("Deposit or withdraw?: ");
                 if(amount<=0){
                     fmt::println("Wrong data!");
                 }
@@ -144,6 +154,8 @@ int main() {
             accountBalance();
             break;
         case 5:
+
+        case 6:
             fmt::println("Thank you for using our services! Have a nice day!");
             break;
     }
