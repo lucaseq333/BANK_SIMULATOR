@@ -1,7 +1,7 @@
 # Bank simulator 🏦
-Application created in C++ language (with fmt library).
+* Application created in C++ language (with fmt library).
 
-Bank simulator must ensure and guarantee the protection of customer data.
+* Bank simulator must ensure and guarantee the protection of customer data.
 
 # Functionality
 Application support operations such as:
