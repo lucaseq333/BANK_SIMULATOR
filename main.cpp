@@ -4,6 +4,7 @@
 #include <ctime>
 #include <fstream>
 #include <map>
+#include <set>
 
 struct Client{
 public:
@@ -23,7 +24,6 @@ public:
     BankAccount(std::string const &login, std::string const &password, double balance, int const &PIN){
 
     }
-public:
     static auto setPINcode(){
         fmt::println("Set your 4-digits PIN code");
         int PINcode;
@@ -33,6 +33,8 @@ public:
         }
     }
 };
+
+std::ofstream paymentHistory("paymentHistory.txt");
 
 auto createAccount(){
     std::string name, surname, dateOfBirth, typeOfAccount;
@@ -50,8 +52,20 @@ auto createAccount(){
     std::cin >> typeOfAccount;
 
     std::time_t timestamp = std::time(nullptr);
-    fmt::println("Congratulations {}! You have been successfully created your account on: {}",name,std::asctime(std::localtime(&timestamp)));
+    auto time = std::asctime(std::localtime(&timestamp));
+    fmt::println("Congratulations {}! You have been successfully created your account on: {}",name,time);
+
+    try{
+        std::fstream file("file.txt");
+        if(file.is_open()){
+            file << "" << name << " " << surname << " " << dateOfBirth << "\nAccount type: " << typeOfAccount << "\nCreated: " << time;
+        }
+    } catch (error_t) {
+        fmt::println("Fatal error!");
+    }
 }
+
+bool isLogged = false;
 
 auto logIn(){
     std::string const login="login";
@@ -66,18 +80,36 @@ auto logIn(){
 
     if(userLogin!=login | userPassword!=password){
         fmt::println("Wrong credentials!");
-    } else {fmt::println("You have logged in successfully!");};
+    } else {
+        isLogged=true;
+        fmt::println("You have logged in successfully!");
+    };
 }
 
 auto depositOrWithdraw(int PIN, double ammount, std::string operationName){
+    auto balance = 1500;
+
+    std::cout << "Ammount: ";
+    std::cin >> ammount;
+
+    std::cout << "Operation: ";
+    std::cin >> operationName;
+
     if(operationName=="deposit"){
         fmt::println("chosen operation: deposit");
-    }; if(operationName=="withdraw"){
+        if(ammount>0){
+            ammount+=balance;
+            fmt::println("Balance: {} PLN",balance);
+        }
+    } if(operationName=="withdraw"){
         fmt::println("chosen operation: withdraw");
-    };
-    fmt::print("PIN {}, Money ammount: {}",PIN,ammount);
-    double balance;
-    return ammount+=balance;
+        if(ammount>0 && ammount<=balance){
+            ammount-=balance;
+            fmt::println("Balance: {} PLN",balance);
+        }
+    } else{
+        fmt::print("Wrong operation!");
+    }
 }
 
 auto accountBalance(){
@@ -111,15 +143,15 @@ auto convertCurrency(){
 }
 
 auto transfer(Client from, double amount, Client to){
-
+    fmt::println("Transfer from: {}\nTransfer to: {}",from,to);
 }
 
-int main() {
+auto main() -> int {
     std::vector<std::string> operations = {
             "Create account", "Log in", "Deposit/Withdraw", "Account balance", "Transfer", "Quit"
     };
 
-    fmt::println("Welcome in Bank! Select 1-5:");
+    fmt::println("Welcome in Bank! Select 1-6:");
     for(int i=0; i<6; i++) {
         fmt::println("{}.{}", (i + 1), operations[i]);
     }
@@ -139,24 +171,21 @@ int main() {
                 std::cout << "Give credentials:\nPIN: ";
                 int PIN, amount;
                 std::string operation;
-
                 std::cin>>PIN;
-                fmt::print("Deposit or withdraw?: ");
+                depositOrWithdraw(PIN,amount,operation);
                 std::cin>>operation;
-                fmt::print("Ammount: ");
                 std::cin>>amount;
-                if(amount<=0){
-                    fmt::println("Wrong data!");
-                }
             }
             break;
         case 4:
             accountBalance();
             break;
         case 5:
-
+            transfer();
         case 6:
             fmt::println("Thank you for using our services! Have a nice day!");
             break;
     }
+
+    std::set<Client> clientsSet;
 }
