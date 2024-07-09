@@ -3,7 +3,8 @@
 
 * Bank simulator must ensure and guarantee the protection of customer data.
 
-  ![C++_logo](https://github.com/lucaseq333/BANK_SIMULATOR/assets/116523351/89372714-a05d-4166-88a1-32896b427b6b)
+![c++logo](https://github.com/lucaseq333/BANK_SIMULATOR/assets/116523351/4dd77e75-23d1-4730-96ac-baa410324344)
+
 
 # Functionality
 Application support operations such as:
