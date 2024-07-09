@@ -7,58 +7,63 @@
 #include <set>
 
 struct Client{
-public:
     std::string name, surname, dateOfBirth;
     std::vector<int> PESEL[11];
     std::vector<int> PIN[4];
-    Client(std::string const &name, std::string const &surname, std::string const &dateOfBirth, int const &PESEL, int const &PIN){
 
-    }
+    /*Client(std::string const &name, std::string const &surname, std::string const &dateOfBirth, int const &PESEL, int const &PIN){
+
+    }*/
+
 };
 
 struct BankAccount{
-public:
-    std::string login,password;
+    std::string login,password, typeOfAccount;
     double balance = 0;
-    std::vector<int> PIN[4];
-    BankAccount(std::string const &login, std::string const &password, double balance, int const &PIN){
 
-    }
-    static auto setPINcode(){
-        fmt::println("Set your 4-digits PIN code");
+    auto setPINcode(){
+        fmt::println("Set your 4-digits PIN code: ");
         int PINcode;
         std::cin >> PINcode;
         for(int i=0; i<=4; i++){
             std::cin >> PINcode;
         }
     }
+
 };
 
-std::ofstream paymentHistory("paymentHistory.txt");
+std::fstream paymentHistory("paymentHistory.txt");
 
 auto createAccount(){
+    const std::vector<Client> clients;
+    Client client;
+    BankAccount bankAccount;
+
     std::string name, surname, dateOfBirth, typeOfAccount;
+    std::vector<int> PESEL[11];
 
     fmt::print("Your name: {}",name);
-    std::cin >> name;
+    std::cin >> client.name;
 
     fmt::print("Your surname: {}",surname);
-    std::cin >> surname;
+    std::cin >> client.surname;
 
     fmt::print("Your date of birth: {}",dateOfBirth);
-    std::cin >> dateOfBirth;
+    std::cin >> client.dateOfBirth;
 
     fmt::print("Type of account (saving, standard): {}",typeOfAccount);
-    std::cin >> typeOfAccount;
+    std::cin >> bankAccount.typeOfAccount;
 
     std::time_t timestamp = std::time(nullptr);
     auto time = std::asctime(std::localtime(&timestamp));
-    fmt::println("Congratulations {}! You have been successfully created your account on: {}",name,time);
+
+    fmt::println("Congratulations {}! You have been successfully created your account on: {}",client.name,time);
 
     try{
         std::fstream file("file.txt");
-        if(file.is_open()){
-            file << "" << name << " " << surname << " " << dateOfBirth << "\nAccount type: " << typeOfAccount << "\nCreated: " << time;
+        if(file.is_open(), file.out | file.app){
+            file << "" << client.name << " " << client.surname << " " << client.dateOfBirth << "\nAccount type: " << bankAccount.typeOfAccount << "\nCreated: " << time;
+            file.close();
         }
     } catch (error_t) {
         fmt::println("Fatal error!");
@@ -75,6 +80,7 @@ auto logIn(){
 
     fmt::print("Type your login: {}",userLogin);
     std::cin >> userLogin;
+
     fmt::print("Type your password: {}",userPassword);
     std::cin >> userPassword;
 
@@ -86,25 +92,27 @@ auto logIn(){
     };
 }
 
-auto depositOrWithdraw(int PIN, double ammount, std::string operationName){
-    auto balance = 1500;
+double balance = 0;
 
-    std::cout << "Ammount: ";
-    std::cin >> ammount;
+auto depositOrWithdraw(int PIN, double amount, std::string operationName){
+    auto &myBalance = balance;
+
+    std::cout << "Declared amount: ";
+    std::cin >> amount;
 
     std::cout << "Operation: ";
     std::cin >> operationName;
 
     if(operationName=="deposit"){
-        fmt::println("chosen operation: deposit");
-        if(ammount>0){
-            ammount+=balance;
+        fmt::println("Chosen operation: deposit");
+        if(amount>0){
+            balance+=amount;
             fmt::println("Balance: {} PLN",balance);
         }
     } if(operationName=="withdraw"){
-        fmt::println("chosen operation: withdraw");
-        if(ammount>0 && ammount<=balance){
-            ammount-=balance;
+        fmt::println("Chosen operation: withdraw");
+        if(amount>0 && amount<=balance){
+            balance-=amount;
             fmt::println("Balance: {} PLN",balance);
         }
     } else{
@@ -119,14 +127,28 @@ auto accountBalance(){
 
     fmt::print("Your PIN code: ");
     std::cin >> userPIN;
+
     if(PIN!=userPIN){
         fmt::print("Wrong PIN code! Try again: ");
         std::cin >> userPIN;
-        if(PIN!=userPIN){fmt::println("Wrong PIN code!");}
+        if(PIN!=userPIN){
+            fmt::println("Wrong PIN code!");
+        }
     } else {
         std::time_t timestamp = std::time(nullptr);
         fmt::print("Balance of your account: {} PLN\n{}", balance,std::asctime(std::localtime(&timestamp)));
     }
+}
+
+auto transfer(BankAccount from, double amount, BankAccount to){
+
+    if(amount>0 && amount<=from.balance){
+        from.balance-=amount;
+        to.balance+=amount;
+    } else{
+        fmt::println("Wrong operation! Try again.");
+    }
+
 }
 
 auto convertCurrency(){
@@ -142,10 +164,6 @@ auto convertCurrency(){
     return *afterConversion;
 }
 
-auto transfer(Client from, double amount, Client to){
-    fmt::println("Transfer from: {}\nTransfer to: {}",from,to);
-}
-
 auto main() -> int {
     std::vector<std::string> operations = {
             "Create account", "Log in", "Deposit/Withdraw", "Account balance", "Transfer", "Quit"
@@ -158,6 +176,16 @@ auto main() -> int {
 
     int selectedNumber;
     std::cin >> selectedNumber;
+
+    std::set<Client> clientsSet;
+
+    std::set<BankAccount> accountsSet;
+    BankAccount bankAccount1;
+    BankAccount bankAccount2;
+    bankAccount1.balance=1000;
+    bankAccount2.balance=5000;
+
+    transfer(bankAccount1,2000,bankAccount2);
 
     switch(selectedNumber){
         case 1:
@@ -181,11 +209,10 @@ auto main() -> int {
             accountBalance();
             break;
         case 5:
-            transfer();
+
         case 6:
             fmt::println("Thank you for using our services! Have a nice day!");
             break;
     }
 
-    std::set<Client> clientsSet;
 }
